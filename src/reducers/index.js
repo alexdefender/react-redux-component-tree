@@ -1,0 +1,12 @@
+import { combineReducers } from 'redux';
+import aReducer from './aReducer';
+import cReducer from './cReducer';
+import eReducer from './eReducer';
+import fReducer from './fReducer';
+
+export const rootReducer = combineReducers({
+    aReducer,
+    cReducer,
+    eReducer,
+    fReducer,
+});
