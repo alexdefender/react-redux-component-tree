@@ -1,7 +1,7 @@
 import { UPDATE_A } from '../actions/update';
 
 const initialState = {
-    a: 'reducer a1',
+    a: 'storeA 1',
 };
 
 export default (state = initialState, action) => {

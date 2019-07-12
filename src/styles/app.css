@@ -1,13 +1,13 @@
 button {
     margin: 10px;
-    width: 150px;
+    width: 180px;
     height: 50px;
 }
 
 .app {
     margin-left: auto;
     margin-right: auto;
-    max-width: 800px;
+    max-width: 1000px;
 }
 
 .row-1,
@@ -31,7 +31,7 @@ button {
 .btn-a,
 .btn-d,
 .btn-f {
-    width: 800px;
+    width: 1000px;
     display: flex;
     justify-content: center;
     align-items: center;

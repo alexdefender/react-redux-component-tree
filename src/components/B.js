@@ -3,8 +3,9 @@ import D from './D';
 
 const B = () => {
     console.log('B');
+
     return (
-        <div className='row-2'>
+        <div className="row-2">
             <div>
                 <button>B</button>
             </div>

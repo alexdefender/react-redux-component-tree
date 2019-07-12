@@ -6,12 +6,15 @@ import { updateE } from '../actions/update';
 class E extends React.Component {
     update = e => {
         e.stopPropagation();
-        const data = 'reducer e2';
-        this.props.updateE(data);
+        let [str, count] = this.props.e.split(' ');
+        const newStrStore = `${str} ${++count}`;
+
+        this.props.updateE(newStrStore);
     };
 
     render() {
         console.log('E');
+
         return (
             <div>
                 <button onClick={this.update}>E {this.props.e}</button>
@@ -21,14 +24,11 @@ class E extends React.Component {
 }
 
 const mapStateToProps = store => ({
-    e: store.eReducer.e,
+    e: store.eReducer.e
 });
 
 const mapDispatchToProps = dispatch => ({
-    updateE: data => dispatch(updateE(data)),
+    updateE: data => dispatch(updateE(data))
 });
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(E);
+export default connect(mapStateToProps, mapDispatchToProps)(E);

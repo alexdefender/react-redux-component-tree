@@ -7,23 +7,29 @@ import L from './L';
 
 class F extends React.Component {
     state = {
-        count: 0,
+        stateFinF: 'stateFinF 1'
     };
 
     update = e => {
         e.stopPropagation();
-        let count = this.state.count;
-        const data = `reducer f2 - state ${++count}`;
-        this.props.updateF(data);
-        this.setState({ count });
+        let [strState, countState] = this.state.stateFinF.split(' ');
+        let [strStore, countStore] = this.props.f.split(' ');
+        const newStrState = `${strState} ${++countState} `;
+        const newStrStore = `${strStore} ${++countStore} `;
+
+        this.setState({ stateFinF: newStrState });
+        this.props.updateF(newStrStore);
     };
 
     render() {
         console.log('F');
+
+        const str = `${this.props.f} - ${this.state.stateFinF}`;
+
         return (
-            <div className='row-3'>
-                <div className='btn-f'>
-                    <button onClick={this.update}>F {this.props.f}</button>
+            <div className="row-3">
+                <div className="btn-f">
+                    <button onClick={this.update}>F {str}</button>
                 </div>
                 <K />
                 <L />
@@ -33,15 +39,12 @@ class F extends React.Component {
 }
 
 const mapStateToProps = store => ({
-    f: store.fReducer.f,
+    f: store.fReducer.f
     // a: store.aReducer.a
 });
 
 const mapDispatchToProps = dispatch => ({
-    updateF: data => dispatch(updateF(data)),
+    updateF: data => dispatch(updateF(data))
 });
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(F);
+export default connect(mapStateToProps, mapDispatchToProps)(F);

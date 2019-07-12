@@ -1,7 +1,7 @@
 import { UPDATE_C } from '../actions/update';
 
 const initialState = {
-    c: 'reducer c1',
+    c: 'storeC 1',
 };
 
 export default (state = initialState, action) => {

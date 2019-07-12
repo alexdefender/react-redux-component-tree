@@ -5,18 +5,30 @@ import { updateC } from '../actions/update';
 import F from './F';
 
 class C extends React.Component {
+    state = {
+        stateCinC: 'stateCinC 1'
+    };
+
     update = e => {
         e.stopPropagation();
-        const data = 'reducer c2';
-        this.props.updateC(data);
+        let [strState, countState] = this.state.stateCinC.split(' ');
+        let [str, count] = this.props.c.split(' ');
+        const newStrState = `${strState} ${++countState} `;
+        const newStrStore = `${str} ${++count}`;
+
+        this.setState({ stateCinC: newStrState });
+        this.props.updateC(newStrStore);
     };
 
     render() {
         console.log('C');
+
+        const str = `${this.props.c} - ${this.state.stateCinC}`;
+
         return (
-            <div className='row-2'>
+            <div className="row-2">
                 <div>
-                    <button onClick={this.update}>C {this.props.c}</button>
+                    <button onClick={this.update}>C {str}</button>
                 </div>
                 <F />
             </div>
@@ -25,14 +37,11 @@ class C extends React.Component {
 }
 
 const mapStateToProps = store => ({
-    c: store.cReducer.c,
+    c: store.cReducer.c
 });
 
 const mapDispatchToProps = dispatch => ({
-    updateC: data => dispatch(updateC(data)),
+    updateC: data => dispatch(updateC(data))
 });
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(C);
+export default connect(mapStateToProps, mapDispatchToProps)(C);

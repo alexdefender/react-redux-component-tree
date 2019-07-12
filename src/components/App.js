@@ -3,8 +3,9 @@ import A from './A';
 
 const App = () => {
     console.log('App');
+
     return (
-        <div className='app'>
+        <div className="app">
             <A />
         </div>
     );
