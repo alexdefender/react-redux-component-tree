@@ -1,34 +1,27 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { updateE } from '../actions/update';
 
-class E extends React.Component {
-    update = e => {
-        e.stopPropagation();
-        let [str, count] = this.props.e.split(' ');
+const E = () => {
+    const { e } = useSelector(store => store.eReducer);
+    const dispatch = useDispatch();
+
+    const update = event => {
+        event.stopPropagation();
+        let [str, count] = e.split(' ');
         const newStrStore = `${str} ${++count}`;
 
-        this.props.updateE(newStrStore);
+        dispatch(updateE(newStrStore));
     };
 
-    render() {
-        console.log('E');
+    console.log('E');
 
-        return (
-            <div>
-                <button onClick={this.update}>E {this.props.e}</button>
-            </div>
-        );
-    }
-}
+    return (
+        <div>
+            <button onClick={update}>E {e}</button>
+        </div>
+    );
+};
 
-const mapStateToProps = store => ({
-    e: store.eReducer.e
-});
-
-const mapDispatchToProps = dispatch => ({
-    updateE: data => dispatch(updateE(data))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(E);
+export default E;

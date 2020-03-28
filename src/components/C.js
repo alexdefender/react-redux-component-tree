@@ -1,47 +1,38 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { updateC } from '../actions/update';
 import F from './F';
 
-class C extends React.Component {
-    state = {
-        stateCinC: 'stateCinC 1'
-    };
+const C = () => {
+    const [stateCinC, setStateCinC] = useState('stateCinC 1');
 
-    update = e => {
+    const { c } = useSelector(store => store.cReducer);
+    const dispatch = useDispatch();
+
+    const update = e => {
         e.stopPropagation();
-        let [strState, countState] = this.state.stateCinC.split(' ');
-        let [str, count] = this.props.c.split(' ');
+        let [strState, countState] = stateCinC.split(' ');
+        let [str, count] = c.split(' ');
         const newStrState = `${strState} ${++countState} `;
         const newStrStore = `${str} ${++count}`;
 
-        this.setState({ stateCinC: newStrState });
-        this.props.updateC(newStrStore);
+        setStateCinC(newStrState);
+        // dispatch(updateC(newStrStore));
     };
 
-    render() {
-        console.log('C');
+    console.log('C');
 
-        const str = `${this.props.c} - ${this.state.stateCinC}`;
+    const str = `${c} - ${stateCinC}`;
 
-        return (
-            <div className="row-2">
-                <div>
-                    <button onClick={this.update}>C {str}</button>
-                </div>
-                <F />
+    return (
+        <div className="row-2">
+            <div>
+                <button onClick={update}>C {str}</button>
             </div>
-        );
-    }
-}
+            <F />
+        </div>
+    );
+};
 
-const mapStateToProps = store => ({
-    c: store.cReducer.c
-});
-
-const mapDispatchToProps = dispatch => ({
-    updateC: data => dispatch(updateC(data))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(C);
+export default C;

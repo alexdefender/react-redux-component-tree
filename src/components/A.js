@@ -1,5 +1,5 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { updateA } from '../actions/update';
 import B from './B';
@@ -7,62 +7,50 @@ import C from './C';
 
 export const contextD = React.createContext({});
 
-class A extends React.Component {
-    state = {
-        stateDinA: 'stateDinA 1',
-        stateContextDinA: 'stateContextDinA 1'
-    };
+const A = () => {
+    const [stateDinA, setStateDinA] = useState('stateDinA 1');
+    const [contextDinA, setContextDinA] = useState('contextDinA 1');
 
-    update = e => {
+    const { a } = useSelector(store => store.aReducer);
+    const dispatch = useDispatch();
+
+    const update = e => {
         e.stopPropagation();
-        let [str, count] = this.props.a.split(' ');
+        let [str, count] = a.split(' ');
         const newStrStore = `${str} ${++count}`;
 
-        this.props.updateA(newStrStore);
+        dispatch(updateA(newStrStore));
     };
 
-    updateStateDinA = e => {
+    const updateStateDinA = e => {
         e.stopPropagation();
-        // let [str, count] = this.state.stateDinA.split(' ');
-        let [str, count] = this.state.stateContextDinA.split(' ');
+        // let [str, count] = stateDinA.split(' ');
+        let [str, count] = contextDinA.split(' ');
 
         const newStrState = `${str} ${++count}`;
 
-        // this.setState({ stateDinA: newStrState });
-        this.setState({ stateContextDinA: newStrState });
+        // setStateDinA(newStrState);
+        setContextDinA(newStrState);
     };
 
-    render() {
-        console.log('A');
+    console.log('A');
 
-        const context = {
-            stateContextDinA: this.state.stateContextDinA,
-            updateStateDinA: this.updateStateDinA
-        }
+    const context = {
+        contextDinA,
+        updateStateDinA
+    };
 
-        return (
-            <contextD.Provider value={context}>
-                <div className="row-1">
-                    <div className="btn-a">
-                        <button onClick={this.update}>A {this.props.a}</button>
-                    </div>
-                    <B
-                        // stateDinA={this.state.stateDinA}
-                        // updateStateDinA={this.updateStateDinA}
-                    />
-                    <C />
+    return (
+        <contextD.Provider value={context}>
+            <div className="row-1">
+                <div className="btn-a">
+                    <button onClick={update}>A {a}</button>
                 </div>
-            </contextD.Provider>
-        );
-    }
-}
+                <B />
+                <C />
+            </div>
+        </contextD.Provider>
+    );
+};
 
-const mapStateToProps = store => ({
-    a: store.aReducer.a
-});
-
-const mapDispatchToProps = dispatch => ({
-    updateA: data => dispatch(updateA(data))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(A);
+export default A;
